@@ -39,6 +39,7 @@ class App {
       res.send('felicidade');
     });
     this.app.post('/login', validEmail, createLogin);
+    this.app.get('/login/validate');
   }
 }
 export { App };

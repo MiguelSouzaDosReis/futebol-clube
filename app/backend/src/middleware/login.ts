@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import * as Jwt from 'jsonwebtoken';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import User from '../database/models/user';
 
 const validEmail = async (req: Request, res: Response, next: NextFunction) => {
@@ -12,6 +15,28 @@ const validEmail = async (req: Request, res: Response, next: NextFunction) => {
   }
   if (email !== whereUser?.email) {
     return res.status(401).json({ message: 'Incorrect email or password' });
+  }
+  next();
+};
+
+interface TokenData {
+  email: string,
+  iat: number,
+  exp: number
+}
+interface TokenInReq extends Request {
+  tokenData?: { email: string, iat: number, exp: number };
+}
+
+export const validToken = async (req: TokenInReq, res: Response, next: NextFunction) => {
+  const { authorization } = req.headers;
+  const secret = await fs.readFile(path.resolve(__dirname, '../../jwt.evaluation.key'));
+  const verifiy = Jwt.verify(authorization, secret) as TokenData;
+  req.tokenData = verifiy;
+  const { email } = req.tokenData;
+  const whereUser = await User.findOne({ where: { email } });
+  if (verifiy) {
+    res.status(200).json({ role: whereUser!.role });
   }
   next();
 };
