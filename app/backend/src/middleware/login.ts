@@ -31,12 +31,20 @@ interface TokenInReq extends Request {
 export const validToken = async (req: TokenInReq, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   const secret = await fs.readFile(path.resolve(__dirname, '../../jwt.evaluation.key'));
-  const verifiy = Jwt.verify(authorization, secret) as TokenData;
-  req.tokenData = verifiy;
-  const { email } = req.tokenData;
-  const whereUser = await User.findOne({ where: { email } });
-  if (verifiy) {
-    res.status(200).json({ role: whereUser!.role });
+  if (authorization === undefined) {
+    return res.status(500).json({ message: 'faltou token' });
+  }
+  try {
+    const verifiy = Jwt.verify(authorization, secret) as TokenData;
+    req.tokenData = verifiy;
+    const { email } = req.tokenData;
+    const whereUser = await User.findOne({ where: { email } });
+    const role = whereUser?.role;
+    if (verifiy) {
+      res.status(200).json(role);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'deu erro de token' });
   }
   next();
 };

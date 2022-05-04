@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import createLogin from './controller/login';
-import validEmail from './middleware/login';
+import validEmail, { validToken } from './middleware/login';
 
 class App {
   public app: express.Express;
@@ -36,10 +36,10 @@ class App {
 
   public routes():void {
     this.app.get('/', (_req, res) => {
-      res.send('felicidade');
+      res.send('esá fucionando !');
     });
     this.app.post('/login', validEmail, createLogin);
-    this.app.get('/login/validate');
+    this.app.get('/login/validate', validToken);
   }
 }
 export { App };
