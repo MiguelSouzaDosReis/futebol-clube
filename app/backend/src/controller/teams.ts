@@ -6,4 +6,11 @@ const everthingTeams = async (_req: Request, res: Response) => {
   return res.status(200).json(everthing);
 };
 
+export const everthingIdTeams = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const everthingId = await Teams.findOne({ where: { id } });
+
+  res.status(200).json(everthingId);
+};
+
 export default everthingTeams;
