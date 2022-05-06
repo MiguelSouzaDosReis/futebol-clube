@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import createLogin from './controller/login';
 import validEmail, { validToken } from './middleware/login';
+import everthingTeams from './controller/teams';
 
 class App {
   public app: express.Express;
@@ -40,6 +41,7 @@ class App {
     });
     this.app.post('/login', validEmail, createLogin);
     this.app.get('/login/validate', validToken);
+    this.app.get('/teams', everthingTeams);
   }
 }
 export { App };
