@@ -22,7 +22,7 @@ Matches.init({
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,
   awayTeamGoals: DataTypes.INTEGER,
-  inProgress: DataTypes.INTEGER,
+  inProgress: DataTypes.BOOLEAN,
 }, {
   underscored: true,
   sequelize: db,
