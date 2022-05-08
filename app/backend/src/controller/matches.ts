@@ -19,4 +19,15 @@ const everthingMatches = async (req: Request, res: Response) => {
   return res.status(200).json(everthing);
 };
 
+export const createMatche = async (req: Request, res: Response) => {
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+  const create = await Matches.create({
+    homeTeam,
+    awayTeam,
+    homeTeamGoals,
+    awayTeamGoals,
+    inProgress: true });
+  res.status(201).json(create);
+};
+
 export default everthingMatches;
