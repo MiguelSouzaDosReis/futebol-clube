@@ -3,7 +3,7 @@ import * as cors from 'cors';
 import createLogin from './controller/login';
 import validEmail, { validToken } from './middleware/login';
 import everthingTeams, { everthingIdTeams } from './controller/teams';
-import everthingMatches, { createMatche } from './controller/matches';
+import everthingMatches, { createMatche, finishTheMatche } from './controller/matches';
 
 class App {
   public app: express.Express;
@@ -46,6 +46,7 @@ class App {
     this.app.get('/teams/:id', everthingIdTeams);
     this.app.get('/matches', everthingMatches);
     this.app.post('/matches', createMatche);
+    this.app.patch('/matches/:id/finish', finishTheMatche);
   }
 }
 export { App };

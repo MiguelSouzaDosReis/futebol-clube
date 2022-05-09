@@ -26,8 +26,15 @@ export const createMatche = async (req: Request, res: Response) => {
     awayTeam,
     homeTeamGoals,
     awayTeamGoals,
-    inProgress: true });
+    inProgress: true,
+  });
   res.status(201).json(create);
+};
+
+export const finishTheMatche = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  await Matches.update({ inProgress: false }, { where: { id } });
+  res.status(200).json({ menssage: 'alteração foi feita' });
 };
 
 export default everthingMatches;
