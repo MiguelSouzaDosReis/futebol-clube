@@ -3,7 +3,7 @@ import * as cors from 'cors';
 import createLogin from './controller/login';
 import validEmail, { validToken } from './middleware/login';
 import everthingTeams, { everthingIdTeams } from './controller/teams';
-import everthingMatches, { createMatche, finishTheMatche } from './controller/matches';
+import everthingMatches, { createMatche, finishTheMatche, UpdadeGoals } from './controller/matches';
 import sameTeam, { dontExistTeam } from './middleware/matches';
 
 class App {
@@ -48,6 +48,7 @@ class App {
     this.app.get('/matches', everthingMatches);
     this.app.post('/matches', sameTeam, dontExistTeam, createMatche);
     this.app.patch('/matches/:id/finish', finishTheMatche);
+    this.app.patch('/matches/:id', UpdadeGoals);
   }
 }
 export { App };

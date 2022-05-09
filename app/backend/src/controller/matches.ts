@@ -37,4 +37,11 @@ export const finishTheMatche = async (req: Request, res: Response) => {
   res.status(200).json({ menssage: 'alteração foi feita' });
 };
 
+export const UpdadeGoals = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+  await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  res.status(200).json({ menssage: 'alteração foi feita' });
+};
+
 export default everthingMatches;
