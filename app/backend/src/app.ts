@@ -4,6 +4,7 @@ import createLogin from './controller/login';
 import validEmail, { validToken } from './middleware/login';
 import everthingTeams, { everthingIdTeams } from './controller/teams';
 import everthingMatches, { createMatche, finishTheMatche } from './controller/matches';
+import sameTeam, { dontExistTeam } from './middleware/matches';
 
 class App {
   public app: express.Express;
@@ -45,7 +46,7 @@ class App {
     this.app.get('/teams', everthingTeams);
     this.app.get('/teams/:id', everthingIdTeams);
     this.app.get('/matches', everthingMatches);
-    this.app.post('/matches', createMatche);
+    this.app.post('/matches', sameTeam, dontExistTeam, createMatche);
     this.app.patch('/matches/:id/finish', finishTheMatche);
   }
 }
