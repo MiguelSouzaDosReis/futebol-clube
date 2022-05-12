@@ -5,6 +5,7 @@ import validEmail, { validToken } from './middleware/login';
 import everthingTeams, { everthingIdTeams } from './controller/teams';
 import everthingMatches, { createMatche, finishTheMatche, UpdadeGoals } from './controller/matches';
 import sameTeam, { dontExistTeam } from './middleware/matches';
+import everthingLeaderboard from './controller/leaderboard';
 
 class App {
   public app: express.Express;
@@ -49,6 +50,7 @@ class App {
     this.app.post('/matches', sameTeam, dontExistTeam, createMatche);
     this.app.patch('/matches/:id/finish', finishTheMatche);
     this.app.patch('/matches/:id', UpdadeGoals);
+    this.app.get('/leaderboard/home', everthingLeaderboard);
   }
 }
 export { App };

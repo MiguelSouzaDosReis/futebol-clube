@@ -8,6 +8,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import User from '../database/models/user';
 import validEmail from '../middleware/login';
+import Teams from '../database/models/teams'
 
 // import { Response } from 'superagent';
 
@@ -15,7 +16,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Requesito 4', () => {
    before( () => {
      sinon.stub(User, "findOne").resolves({
        id: 1,
@@ -28,7 +29,7 @@ describe('Seu teste', () => {
    after(()=>{
      (User.findOne as sinon.SinonStub).restore();
    })
-    it('Requisto 4 tudo tando certo', async () => {
+    it('tudo tando certo', async () => {
      const { body, status } = await chai.request(app).post('/login').send(
        { email:'aaaaaa@aaaa.com', password: 'secret_admin' })
        const secret = await fs.readFile(path.resolve(__dirname, '../../jwt.evaluation.key'));
@@ -41,7 +42,7 @@ describe('Seu teste', () => {
      expect(status).to.be.equal(200)
    });
  
-   it('Requisto 4 - email vazio', async () => {
+   it('email vazio', async () => {
     const { body, status } = await chai.request(app).post('/login').send(
       { email:'', password: 'secret_admin' })
       // console.log(body)
@@ -50,7 +51,7 @@ describe('Seu teste', () => {
     expect(status).to.be.equal(400)
   });
 
-   it('Requisto 4 - password vazio', async () => {
+   it('password vazio', async () => {
     const { body, status } = await chai.request(app).post('/login').send(
       { email:'aaaaaa@aaaa.com', password: '' })
       // console.log(body)
@@ -58,7 +59,7 @@ describe('Seu teste', () => {
     expect(body).to.be.deep.equal({message: 'All fields must be filled'})
     expect(status).to.be.equal(400)
   });
-   it('Requisto 4 - email errado', async () => {
+   it('email errado', async () => {
     const { body, status } = await chai.request(app).post('/login').send(
       { email:'aaaaaa@Maaa.com', password: 'secret_admin' })
       // console.log(body)
@@ -66,7 +67,7 @@ describe('Seu teste', () => {
     expect(body).to.be.deep.equal({message: 'Incorrect email or password'})
     expect(status).to.be.equal(401)
   });
-   it('Requisto 4 - password errado', async () => {
+   it('password errado', async () => {
     const { body, status } = await chai.request(app).post('/login').send(
       { email:'aaaaaa@aaaa.com', password: 'secretdmin' })
       // console.log(body)
@@ -74,7 +75,7 @@ describe('Seu teste', () => {
     expect(body).to.be.deep.equal({message: 'Incorrect email or password'})
     expect(status).to.be.equal(401)
   });
-      it('Requisto 4 validToke tando certo', async () => {
+      it('validToke tando certo', async () => {
      const { body: { token } } = await chai.request(app).post('/login').send(
       { email:'aaaaaa@aaaa.com', password: 'secret_admin' })
       const { body, status } = await chai.request(app).get('/login/validate').set({
@@ -86,7 +87,7 @@ describe('Seu teste', () => {
       expect(body).to.be.equal('admin')
       expect(status).to.be.equal(200)
    });
-    it('Requisto 4 validToke faltou token', async () => {
+    it('validToke faltou token', async () => {
     const { body: { token } } = await chai.request(app).post('/login').send(
      { email:'aaaaaa@aaaa.com', password: 'secret_admin' })
      const { body, status } = await chai.request(app).get('/login/validate')
@@ -96,7 +97,7 @@ describe('Seu teste', () => {
      expect(body).to.be.deep.equal({ message: 'faltou token' })
      expect(status).to.be.equal(500)
   });
-  it('Requisto 4 validToke token errado', async () => {
+  it('validToke token errado', async () => {
     const { body: { token } } = await chai.request(app).post('/login').send(
      { email:'aaaaaa@aaaa.com', password: 'secret_admin' })
      const { body, status } = await chai.request(app).get('/login/validate').set({
@@ -109,3 +110,16 @@ describe('Seu teste', () => {
      expect(status).to.be.equal(500)
   })
 });
+
+/* describe('Requesito 4', () => {
+  before( () => {
+    sinon.stub(Teams, "findAll").resolves({
+      } as Teams);
+  });
+  after(()=>{
+    (
+      Teams.findOne as sinon.SinonStub).restore();
+  })
+
+}); */
+
