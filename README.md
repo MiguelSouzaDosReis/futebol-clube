@@ -1,7 +1,6 @@
 # Project Futebol Clube
 
-Neste projeto fiz a construção de um CRUD com typeScript, utilizando ORM além da onstrução de uma API REST com endpoints para consumir os models criados;
-A criação e associação de tabelas usando models do sequelize com a modelagem de dados com MySQL através do Sequelize, tudo isso para realizar os desafios propostos na Trybe
+Neste projeto para realizar os desafios propostos na Trybe. fiz a construção de um CRUD com typeScript, e a associação de tabelas usando models do sequelize
 
 # Os desafios são
 
